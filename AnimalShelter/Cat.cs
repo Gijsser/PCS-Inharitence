@@ -12,6 +12,7 @@ namespace AnimalShelter
         /// or null if the cat has no bad habits.
         /// </summary>
         public string BadHabits { get; set; }
+        public override decimal Price { get; set; }
 
         /// <summary>
         /// Creates a cat.
@@ -33,6 +34,7 @@ namespace AnimalShelter
             else {
                 BadHabits = badHabits;
             }
+            Price = GetPrice();
         }
 
         /// <summary>
@@ -50,6 +52,23 @@ namespace AnimalShelter
         public override string ToString()
         {
             return base.ToString()+", " + BadHabits;
+        }
+
+        public override decimal GetPrice()
+        {
+            decimal price = 60;
+            if(BadHabits != "No bad habits")
+            {
+                if(BadHabits.Length > 40)
+                {
+                    price = 20;
+                }
+                else
+                {
+                    price -= BadHabits.Length;
+                }
+            }
+            return price;
         }
     }
 }

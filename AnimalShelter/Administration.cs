@@ -7,39 +7,61 @@ namespace AnimalShelter
 {
     public class Administration
     {
-        private List<Animal> Animals;
+
+        private List<Animal> ReservedAnimals;
+        private List<Animal> UnreservedAnimals;
 
         public Administration()
         {
-            Animals = new List<Animal>();
+            ReservedAnimals = new List<Animal>();
+            UnreservedAnimals = new List<Animal>();
         }
 
         public bool Add(Animal animal)
         {
             try
             {
-                Animals.Add(animal);
+                if(animal.IsReserved == true)
+                {
+                    ReservedAnimals.Add(animal);
+                }
+                else
+                {
+                    UnreservedAnimals.Add(animal);
+                }
+                ReservedAnimals.Sort();
+                UnreservedAnimals.Sort();
                 return true;
             }
             catch
             {
                 return false;
             }
+            
+
        }
 
         public bool RemoveAnimal(int chipRegistrationNumber)
         {
             try
             {
-                foreach (Animal a in Animals)
+                foreach (Animal a in ReservedAnimals) 
                 {
 
                     if (a.ChipRegistrationNumber == chipRegistrationNumber)
                     {
-                        Animals.Remove(a);
+                        ReservedAnimals.Remove(a);
                         return true;
                     }
 
+                }
+                foreach(Animal a in UnreservedAnimals)
+                {
+                    if (a.ChipRegistrationNumber == chipRegistrationNumber)
+                    {
+                        UnreservedAnimals.Remove(a);
+                        return true;
+                    }
                 }
             }
             catch
@@ -52,18 +74,30 @@ namespace AnimalShelter
         public Animal FindAnimal(int chipRegistrationNumber)
         {
             Animal currentAnimal = null;
-            foreach(Animal A in Animals)
+            foreach(Animal A in UnreservedAnimals)
             {
                 if(A.ChipRegistrationNumber == chipRegistrationNumber)
                 {
                     currentAnimal = A;
                 }
             }
+            foreach (Animal A in ReservedAnimals)
+            {
+                if (A.ChipRegistrationNumber == chipRegistrationNumber)
+                {
+                    currentAnimal = A;
+                }
+            }
+
             return currentAnimal;
         }
-        public List<Animal> GetAnimals()
+        public List<Animal> GetReservedAnimals()
         {
-            return Animals;
+            return ReservedAnimals;
+        }
+        public List<Animal> GetUnReservedAnimals()
+        {
+            return UnreservedAnimals;
         }
     }
 }

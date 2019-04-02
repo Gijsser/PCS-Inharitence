@@ -11,6 +11,7 @@ namespace AnimalShelter
         /// The date of the last walk of the dog. Contains null if unknown.
         /// </summary>
         public SimpleDate LastWalkDate { get; set; }
+        public override decimal Price { get; set; }
 
         /// <summary>
         /// Creates a dog.
@@ -24,13 +25,15 @@ namespace AnimalShelter
                    string name, SimpleDate lastWalkDate) : base (chipRegistrationNumber, dateOfBirth, name)
         {
             LastWalkDate = lastWalkDate;
+            Price = GetPrice();
         }
 
-        public Dog(int chipRegistrationNumber, SimpleDate dateOfBirth,
-                 string name) : base(chipRegistrationNumber, dateOfBirth, name)
-        {
-            LastWalkDate = null;
-        }
+        //public Dog(int chipRegistrationNumber, SimpleDate dateOfBirth,
+        //         string name) : base(chipRegistrationNumber, dateOfBirth, name)
+        //{
+        //    LastWalkDate = null;
+        //    Price = GetPrice();
+        //}
 
         /// <summary>
         /// Retrieve information about this dog
@@ -53,6 +56,16 @@ namespace AnimalShelter
             }
             
             return base.ToString() + ", " + walked;
+        }
+
+        public override decimal GetPrice()
+        {
+            decimal price = 350;
+            if(ChipRegistrationNumber < 50000)
+            {
+                price = 200;
+            }
+            return price;
         }
     }
 }

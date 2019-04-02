@@ -88,18 +88,17 @@ namespace AnimalShelter
             listBoxAnimalsNotReserved.Items.Clear();
             listBoxAnimalsReserved.Items.Clear();
             comboBoxFindAnimal.Items.Clear();
-            foreach (Animal a in Administration.GetAnimals())
+            foreach (Animal a in Administration.GetReservedAnimals())
             {
-                if (a.IsReserved == false)
-                {
-                    listBoxAnimalsNotReserved.Items.Add(a);
-                }
-                if (a.IsReserved == true)
-                {
-                    listBoxAnimalsReserved.Items.Add(a);
-                }
+                listBoxAnimalsReserved.Items.Add(a);
                 comboBoxFindAnimal.Items.Add(a.ChipRegistrationNumber);
             }
+            foreach (Animal a in Administration.GetUnReservedAnimals())
+            {
+                listBoxAnimalsNotReserved.Items.Add(a);
+                comboBoxFindAnimal.Items.Add(a.ChipRegistrationNumber);
+            }
+
         }
 
         /// <summary>
