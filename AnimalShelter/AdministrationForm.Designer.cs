@@ -43,7 +43,16 @@
             this.numericUpDownLastDayWalked = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownLastMonthWalkedMonth = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownLastWallkedYear = new System.Windows.Forms.NumericUpDown();
-            this.listBoxAnimals = new System.Windows.Forms.ListBox();
+            this.listBoxAnimalsNotReserved = new System.Windows.Forms.ListBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.listBoxAnimalsReserved = new System.Windows.Forms.ListBox();
+            this.Reserved = new System.Windows.Forms.Label();
+            this.ButtonReserve = new System.Windows.Forms.Button();
+            this.buttonUnReserve = new System.Windows.Forms.Button();
+            this.comboBoxFindAnimal = new System.Windows.Forms.ComboBox();
+            this.buttonFind = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMonth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -60,7 +69,7 @@
             "Cat",
             "Dog"});
             this.animalTypeComboBox.Location = new System.Drawing.Point(28, 27);
-            this.animalTypeComboBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.animalTypeComboBox.Margin = new System.Windows.Forms.Padding(7);
             this.animalTypeComboBox.Name = "animalTypeComboBox";
             this.animalTypeComboBox.Size = new System.Drawing.Size(277, 37);
             this.animalTypeComboBox.TabIndex = 0;
@@ -69,7 +78,7 @@
             // createAnimalButton
             // 
             this.createAnimalButton.Location = new System.Drawing.Point(324, 22);
-            this.createAnimalButton.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.createAnimalButton.Margin = new System.Windows.Forms.Padding(7);
             this.createAnimalButton.Name = "createAnimalButton";
             this.createAnimalButton.Size = new System.Drawing.Size(149, 51);
             this.createAnimalButton.TabIndex = 1;
@@ -80,7 +89,7 @@
             // showInfoButton
             // 
             this.showInfoButton.Location = new System.Drawing.Point(488, 22);
-            this.showInfoButton.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.showInfoButton.Margin = new System.Windows.Forms.Padding(7);
             this.showInfoButton.Name = "showInfoButton";
             this.showInfoButton.Size = new System.Drawing.Size(175, 51);
             this.showInfoButton.TabIndex = 2;
@@ -270,21 +279,120 @@
             0,
             0});
             // 
-            // listBoxAnimals
+            // listBoxAnimalsNotReserved
             // 
-            this.listBoxAnimals.FormattingEnabled = true;
-            this.listBoxAnimals.ItemHeight = 29;
-            this.listBoxAnimals.Location = new System.Drawing.Point(739, 27);
-            this.listBoxAnimals.Name = "listBoxAnimals";
-            this.listBoxAnimals.Size = new System.Drawing.Size(705, 584);
-            this.listBoxAnimals.TabIndex = 16;
+            this.listBoxAnimalsNotReserved.FormattingEnabled = true;
+            this.listBoxAnimalsNotReserved.ItemHeight = 29;
+            this.listBoxAnimalsNotReserved.Location = new System.Drawing.Point(739, 56);
+            this.listBoxAnimalsNotReserved.Name = "listBoxAnimalsNotReserved";
+            this.listBoxAnimalsNotReserved.Size = new System.Drawing.Size(634, 584);
+            this.listBoxAnimalsNotReserved.TabIndex = 16;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(743, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(158, 29);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Not reserved:";
+            // 
+            // listBoxAnimalsReserved
+            // 
+            this.listBoxAnimalsReserved.FormattingEnabled = true;
+            this.listBoxAnimalsReserved.ItemHeight = 29;
+            this.listBoxAnimalsReserved.Location = new System.Drawing.Point(1402, 56);
+            this.listBoxAnimalsReserved.Name = "listBoxAnimalsReserved";
+            this.listBoxAnimalsReserved.Size = new System.Drawing.Size(634, 584);
+            this.listBoxAnimalsReserved.TabIndex = 18;
+            // 
+            // Reserved
+            // 
+            this.Reserved.AutoSize = true;
+            this.Reserved.Location = new System.Drawing.Point(1407, 9);
+            this.Reserved.Name = "Reserved";
+            this.Reserved.Size = new System.Drawing.Size(123, 29);
+            this.Reserved.TabIndex = 19;
+            this.Reserved.Text = "Reserved:";
+            // 
+            // ButtonReserve
+            // 
+            this.ButtonReserve.Location = new System.Drawing.Point(748, 661);
+            this.ButtonReserve.Name = "ButtonReserve";
+            this.ButtonReserve.Size = new System.Drawing.Size(179, 56);
+            this.ButtonReserve.TabIndex = 20;
+            this.ButtonReserve.Text = "Reserve";
+            this.ButtonReserve.UseVisualStyleBackColor = true;
+            this.ButtonReserve.Click += new System.EventHandler(this.ButtonReserve_Click);
+            // 
+            // buttonUnReserve
+            // 
+            this.buttonUnReserve.Location = new System.Drawing.Point(1402, 661);
+            this.buttonUnReserve.Name = "buttonUnReserve";
+            this.buttonUnReserve.Size = new System.Drawing.Size(179, 56);
+            this.buttonUnReserve.TabIndex = 21;
+            this.buttonUnReserve.Text = "Unreserve";
+            this.buttonUnReserve.UseVisualStyleBackColor = true;
+            this.buttonUnReserve.Click += new System.EventHandler(this.buttonUnReserve_Click);
+            // 
+            // comboBoxFindAnimal
+            // 
+            this.comboBoxFindAnimal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFindAnimal.FormattingEnabled = true;
+            this.comboBoxFindAnimal.Location = new System.Drawing.Point(16, 647);
+            this.comboBoxFindAnimal.Margin = new System.Windows.Forms.Padding(7);
+            this.comboBoxFindAnimal.Name = "comboBoxFindAnimal";
+            this.comboBoxFindAnimal.Size = new System.Drawing.Size(277, 37);
+            this.comboBoxFindAnimal.TabIndex = 22;
+            // 
+            // buttonFind
+            // 
+            this.buttonFind.Location = new System.Drawing.Point(336, 639);
+            this.buttonFind.Margin = new System.Windows.Forms.Padding(7);
+            this.buttonFind.Name = "buttonFind";
+            this.buttonFind.Size = new System.Drawing.Size(149, 51);
+            this.buttonFind.TabIndex = 23;
+            this.buttonFind.Text = "Find";
+            this.buttonFind.UseVisualStyleBackColor = true;
+            this.buttonFind.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Location = new System.Drawing.Point(514, 639);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(7);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(149, 51);
+            this.buttonDelete.TabIndex = 24;
+            this.buttonDelete.Text = "Delete";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(466, 399);
+            this.button1.Margin = new System.Windows.Forms.Padding(7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(149, 51);
+            this.button1.TabIndex = 25;
+            this.button1.Text = "Test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // AdministrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2168, 729);
-            this.Controls.Add(this.listBoxAnimals);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonDelete);
+            this.Controls.Add(this.buttonFind);
+            this.Controls.Add(this.comboBoxFindAnimal);
+            this.Controls.Add(this.buttonUnReserve);
+            this.Controls.Add(this.ButtonReserve);
+            this.Controls.Add(this.Reserved);
+            this.Controls.Add(this.listBoxAnimalsReserved);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.listBoxAnimalsNotReserved);
             this.Controls.Add(this.numericUpDownLastWallkedYear);
             this.Controls.Add(this.numericUpDownLastMonthWalkedMonth);
             this.Controls.Add(this.numericUpDownLastDayWalked);
@@ -300,7 +408,7 @@
             this.Controls.Add(this.showInfoButton);
             this.Controls.Add(this.createAnimalButton);
             this.Controls.Add(this.animalTypeComboBox);
-            this.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.Margin = new System.Windows.Forms.Padding(7);
             this.Name = "AdministrationForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDy)).EndInit();
@@ -331,7 +439,16 @@
         private System.Windows.Forms.NumericUpDown numericUpDownLastDayWalked;
         private System.Windows.Forms.NumericUpDown numericUpDownLastMonthWalkedMonth;
         private System.Windows.Forms.NumericUpDown numericUpDownLastWallkedYear;
-        private System.Windows.Forms.ListBox listBoxAnimals;
+        private System.Windows.Forms.ListBox listBoxAnimalsNotReserved;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox listBoxAnimalsReserved;
+        private System.Windows.Forms.Label Reserved;
+        private System.Windows.Forms.Button ButtonReserve;
+        private System.Windows.Forms.Button buttonUnReserve;
+        private System.Windows.Forms.ComboBox comboBoxFindAnimal;
+        private System.Windows.Forms.Button buttonFind;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -16,14 +16,24 @@ namespace AnimalShelter
         /// </summary>
         public Animal animal;
         private int RegNummer = 0;
-        private List<Animal> Animals;
+        public Administration Administration;
 
         /// <summary>
         /// Creates the form for doing adminstrative tasks
         /// </summary>
         public AdministrationForm()
         {
-            Animals = new List<Animal>();
+            Administration = new Administration();
+            animal = new Cat(RegNummer++, new SimpleDate(1, 04, 2018), "Klaartje","");
+            Administration.Add(animal);
+            animal = new Cat(RegNummer++, new SimpleDate(12, 8, 2014), "Puck", "");
+            Administration.Add(animal);
+            animal = new Cat(RegNummer++, new SimpleDate(21, 11, 2016), "Bor", "");
+            Administration.Add(animal);
+            animal = new Dog(RegNummer++, new SimpleDate(6, 5, 2013), "Kinga", new SimpleDate(1,1,1980));
+            Administration.Add(animal);
+            animal = new Dog(RegNummer++, new SimpleDate(17, 12, 2016), "Bijke", new SimpleDate(1, 1, 1980));
+            Administration.Add(animal);
             InitializeComponent();
             animalTypeComboBox.SelectedIndex = 0;
             textBoxBadHabits.Visible = true;
@@ -33,6 +43,8 @@ namespace AnimalShelter
             numericUpDownLastWallkedYear.Visible = false;
             numericUpDownLastMonthWalkedMonth.Visible = false;
             animal = null;
+            UpdateListbox();
+
         }
 
         /// <summary>
@@ -53,13 +65,19 @@ namespace AnimalShelter
                 if (animalTypeComboBox.SelectedIndex == 0)
                 {
                     animal = new Cat(RegNummer++, new SimpleDate(Convert.ToInt32(numericUpDownDy.Value), Convert.ToInt32(numericUpDownMonth.Value), Convert.ToInt32(numericUpDown3.Value)), textBoxName.Text, textBoxBadHabits.Text);
-                    Animals.Add(animal);
+                    if (Administration.Add(animal) == false)
+                    {
+                        MessageBox.Show("Er is iets fout gegaan");
+                    }
                 }
 
                 if (animalTypeComboBox.SelectedIndex == 1)
                 {
                     animal = new Dog(RegNummer++, new SimpleDate(Convert.ToInt32(numericUpDownDy.Value), Convert.ToInt32(numericUpDownMonth.Value), Convert.ToInt32(numericUpDown3.Value)), textBoxName.Text, new SimpleDate(Convert.ToInt32(numericUpDownLastDayWalked.Value), Convert.ToInt32(numericUpDownLastMonthWalkedMonth.Value), Convert.ToInt32(numericUpDownLastWallkedYear.Value)));
-                    Animals.Add(animal);
+                    if (Administration.Add(animal) == false)
+                    {
+                        MessageBox.Show("Er is iets fout gegaan");
+                    }
                 }
                 UpdateListbox();
             }
@@ -67,10 +85,20 @@ namespace AnimalShelter
 
         private void UpdateListbox()
         {
-            listBoxAnimals.Items.Clear();
-            foreach(Animal a in Animals)
+            listBoxAnimalsNotReserved.Items.Clear();
+            listBoxAnimalsReserved.Items.Clear();
+            comboBoxFindAnimal.Items.Clear();
+            foreach (Animal a in Administration.GetAnimals())
             {
-                listBoxAnimals.Items.Insert(a.ChipRegistrationNumber, a.ToString());
+                if (a.IsReserved == false)
+                {
+                    listBoxAnimalsNotReserved.Items.Add(a);
+                }
+                if (a.IsReserved == true)
+                {
+                    listBoxAnimalsReserved.Items.Add(a);
+                }
+                comboBoxFindAnimal.Items.Add(a.ChipRegistrationNumber);
             }
         }
 
@@ -81,18 +109,13 @@ namespace AnimalShelter
         /// <param name="e"></param>
         private void showInfoButton_Click(object sender, EventArgs e)
         {
-            foreach(Animal a in Animals)
-            {
-                if(a.ChipRegistrationNumber == listBoxAnimals.SelectedIndex)
-                {
-                    MessageBox.Show(a.ToString());
-                }
-            }
+            Animal currentAnimal = listBoxAnimalsNotReserved.SelectedItem as Animal;
+            MessageBox.Show(currentAnimal.ToString());
         }
 
         private void animalTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(animalTypeComboBox.Text == "Cat")
+            if (animalTypeComboBox.Text == "Cat")
             {
                 textBoxBadHabits.Visible = true;
                 LabelHabits.Visible = true;
@@ -101,7 +124,7 @@ namespace AnimalShelter
                 numericUpDownLastWallkedYear.Visible = false;
                 numericUpDownLastMonthWalkedMonth.Visible = false;
             }
-            if(animalTypeComboBox.Text == "Dog")
+            if (animalTypeComboBox.Text == "Dog")
             {
                 textBoxBadHabits.Visible = false;
                 LabelHabits.Visible = false;
@@ -110,6 +133,74 @@ namespace AnimalShelter
                 numericUpDownLastWallkedYear.Visible = true;
                 numericUpDownLastMonthWalkedMonth.Visible = true;
             }
+        }
+
+        private void ButtonReserve_Click(object sender, EventArgs e)
+        {
+            //Vraag: mag je voor het reserveren in de class van Administration een extra methode aanmaken?
+
+            try
+            {
+                Animal currentAnimal = listBoxAnimalsNotReserved.SelectedItem as Animal;
+                Administration.RemoveAnimal(currentAnimal.ChipRegistrationNumber);
+                currentAnimal.IsReserved = true;
+                if (Administration.Add(currentAnimal) == true)
+                {
+                    MessageBox.Show("Reserved!");
+                }
+                UpdateListbox();
+            }
+            catch { }       
+            
+        }
+
+        private void buttonUnReserve_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Animal currentAnimal = listBoxAnimalsReserved.SelectedItem as Animal;
+                Administration.RemoveAnimal(currentAnimal.ChipRegistrationNumber);
+                currentAnimal.IsReserved = false;
+                if(Administration.Add(currentAnimal)== true)
+                {
+                    MessageBox.Show("Unreserved!");
+                }
+                UpdateListbox();
+            }
+            catch { }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Animal currentanimal = Administration.FindAnimal(Convert.ToInt32(comboBoxFindAnimal.Text));
+                if ( currentanimal != null)
+                {
+                    MessageBox.Show(currentanimal.ToString());
+                }
+                
+            }
+            catch { }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Administration.RemoveAnimal(Convert.ToInt16(comboBoxFindAnimal.Text)) == true)
+                {
+                    MessageBox.Show("Deleted!");
+                }
+                UpdateListbox();
+            }
+            catch { }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            animal = new Dog(RegNummer++, new SimpleDate(17, 12, 2016), "Bijke", new SimpleDate(1, 1, 1980));
+            MessageBox.Show(animal.ToString());
         }
     }
 }

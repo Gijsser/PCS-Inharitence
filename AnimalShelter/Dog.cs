@@ -26,6 +26,12 @@ namespace AnimalShelter
             LastWalkDate = lastWalkDate;
         }
 
+        public Dog(int chipRegistrationNumber, SimpleDate dateOfBirth,
+                 string name) : base(chipRegistrationNumber, dateOfBirth, name)
+        {
+            LastWalkDate = null;
+        }
+
         /// <summary>
         /// Retrieve information about this dog
         /// 
@@ -40,25 +46,13 @@ namespace AnimalShelter
         /// </returns>
         public override string ToString()
         {
-            string reserved;
-            if (IsReserved == false)
-            {
-                reserved = "Not reserved";
-            }
-            else
-            {
-                reserved = "reserved";
-            }
-            string walked;
-            if(LastWalkDate == new SimpleDate(1, 1, 1980))
+            string walked = LastWalkDate.ToString();
+            if (walked == "01/01/1980" || walked == null)
             {
                 walked = "Please Walk!";
             }
-            else
-            {
-                walked = LastWalkDate.ToString();
-            }
-            return($"Dog: {ChipRegistrationNumber}, {DateOfBirth}, {Name}, {reserved}, {walked}");
+            
+            return base.ToString() + ", " + walked;
         }
     }
 }

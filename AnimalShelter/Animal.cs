@@ -58,14 +58,10 @@ namespace AnimalShelter
         /// </returns>
         public override string ToString()
         {
-            string IsReservedString;
+            string IsReservedString = "not reserved";
             if (IsReserved)
             {
                 IsReservedString = "reserved";
-            }
-            else
-            {
-                IsReservedString = "not reserved";
             }
 
             string info = ChipRegistrationNumber

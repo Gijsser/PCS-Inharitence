@@ -49,16 +49,7 @@ namespace AnimalShelter
         /// </returns>
         public override string ToString()
         {
-            string reserved;
-            if(IsReserved == false)
-            {
-                reserved = "Not reserved";
-            }
-            else
-            {
-                reserved = "reserved";
-            }
-            return ($"Cat: {ChipRegistrationNumber}, {DateOfBirth}, {Name}, {reserved}, {BadHabits}");
+            return base.ToString()+", " + BadHabits;
         }
     }
 }

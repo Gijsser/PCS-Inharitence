@@ -71,7 +71,7 @@ namespace AnimalShelter
         /// <returns></returns>
         public override string ToString()
         {
-            return date.ToString("dd-MM-yyyy");
+            return date.ToShortDateString();
         }
     }
 }
